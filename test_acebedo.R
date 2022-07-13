@@ -1,0 +1,69 @@
+## NOTAS para mapa de Acebedo con toponimos
+
+##---------------------------------------
+##De Curso R 07-mapas.R:
+
+# paquetes que usaremos en esta sección
+library(ggmap)
+library(tidyverse)
+library(sf)
+library(ggspatial)
+library(tmaptools)
+library(leaflet)## Libreria por defecto para crear mapas dinamicos
+library(sf)
+library(readxl)
+
+#Test Acebedo------------------------------------
+#leaflet
+
+#Posicion marcadores
+
+# Leer datos de excel (en este caso exportado de google earth)
+my_data <- read_excel("test.xlsx")
+prados <- data.frame(lon = my_data$x, lat = my_data$y, nombre = my_data$Name)
+
+# data.frame a sf
+points_sf <- st_as_sf(prados, coords = c("lon", "lat"), crs = 4326)
+
+
+# mapa
+n <- leaflet() %>%
+  addTiles() %>%  
+  ## Anhadimos marcadores como nombres con cluster 
+  addLabelOnlyMarkers(data = points_sf,
+                      label = as.character(prados$nombre),
+                      labelOptions = leaflet::labelOptions(
+                        style=list('color'="#000000",
+                                   'fontSize'="20px", 
+                                   'font-family'= 'serif',
+                                   'background-color' = "rgba(255,255,255,0.5)",
+                                   "box-shadow" = "2px 2px rgba(0,0,0,0.2)",
+                                  "border-color" = "rgba(255,255,255,0.5)"),
+                        noHide = TRUE,
+                        direction = "bottom",
+                        textOnly = TRUE,
+                        offset = c(0, -10),
+                        opacity = 1),
+                      clusterOptions = markerClusterOptions(showCoverageOnHover = TRUE,
+                                                            zoomToBoundsOnClick = TRUE,
+                                                            spiderfyOnMaxZoom = TRUE,
+                                                            removeOutsideVisibleBounds = TRUE,
+                                                            spiderLegPolylineOptions = list(weight = 1.5, color = "#222", opacity = 0.5),
+                                                           freezeAtZoom = FALSE))
+
+
+
+
+n %>% addProviderTiles("OpenTopoMap", group = "Topo") %>%
+  addProviderTiles("Esri.WorldImagery", group = "Satelite") %>%
+  addLayersControl(
+    baseGroups = c("Satelite", "Topo", "OSM"),
+    overlayGroups = c("Prados"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+
+
+
+##-------------------------------------------------
+
+
