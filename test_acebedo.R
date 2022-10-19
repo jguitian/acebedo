@@ -1,7 +1,7 @@
 ## NOTAS para mapa de Acebedo con toponimos
 
 ##---------------------------------------
-##De Curso R 07-mapas.R:
+#
 
 # paquetes que usaremos en esta sección
 library(ggmap)
