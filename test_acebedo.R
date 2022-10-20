@@ -1,22 +1,20 @@
-## NOTAS para mapa de Acebedo con toponimos
-
+## NOTAS para mapa de Acebedo con toponimos#
+##test 20 10 2022
 ##---------------------------------------
-#
-
-# paquetes que usaremos en esta sección
+# paquetes 
 library(ggmap)
 library(tidyverse)
 library(sf)
 library(ggspatial)
 library(tmaptools)
-library(leaflet)## Libreria por defecto para crear mapas dinamicos
+library(leaflet)## 
 library(sf)
 library(readxl)
 
 #Test Acebedo------------------------------------
+##
 
-
-#Posicion marcadores
+##Posicion marcadores
 
 # Leer datos de excel (en este caso exportado de google earth)
 my_data <- read_excel("locations.xlsx")
@@ -24,15 +22,14 @@ prados <- data.frame(lon = my_data$x,
                      lat = my_data$y, 
                      nombre = my_data$Name, 
                      tipo = my_data$tipo)
+
 # data.frame a sf
 points_sf <- st_as_sf(prados, coords = c("lon", "lat"), crs = 4326)
-
 
 points.df <- split(points_sf, prados$tipo)
 # 
 # names(points.df) 
 
-  
 
 
 # quakes <- quakes %>%
@@ -46,7 +43,7 @@ points.df <- split(points_sf, prados$tipo)
 # names(quakes.df) %>%
 #   purrr::walk( function(df) {
 #     l <<- l %>%
-#       addMarkers(data=quakes.df[[df]],
+#       addMarkers(data=quakes.df[[df]],hhh
 #                  lng=~long, lat=~lat,
 #                  label=~as.character(mag),
 #                  popup=~as.character(mag),
@@ -58,11 +55,13 @@ points.df <- split(points_sf, prados$tipo)
 
 
 
+###
+
 # mapa
 n <- leaflet() %>%
   setView(lng=-5.116429, lat=43.04103, zoom=14) %>%
   addTiles()  %>%
-
+  
   ## Anhadimos marcadores como nombres con cluster 
   addLabelOnlyMarkers(data = points_sf,
                       label = as.character(prados$nombre),
@@ -79,24 +78,24 @@ n <- leaflet() %>%
                         offset = c(0, -10),
                         opacity = 1),
                       # group = df,
-                     clusterOptions = markerClusterOptions(
-                                      showCoverageOnHover = TRUE,
-                                      zoomToBoundsOnClick = TRUE,
-                                      spiderfyOnMaxZoom = TRUE,
-                                      removeOutsideVisibleBounds = TRUE,
-                                      spiderLegPolylineOptions = list(
-                                                                    weight = 1.5,
-                                                                    color = "#222",
-                                                                    opacity = 0.1),
-                                      freezeAtZoom = FALSE,
-                                      maxClusterRadius = 40))
+                      clusterOptions = markerClusterOptions(
+                        showCoverageOnHover = TRUE,
+                        zoomToBoundsOnClick = TRUE,
+                        spiderfyOnMaxZoom = TRUE,
+                        removeOutsideVisibleBounds = TRUE,
+                        spiderLegPolylineOptions = list(
+                          weight = 1.5,
+                          color = "#222",
+                          opacity = 0.1),
+                        freezeAtZoom = FALSE,
+                        maxClusterRadius = 40))
 
 
 
 n %>% 
   addProviderTiles("OpenTopoMap", group = "Topo") %>%
   addProviderTiles("Esri.WorldImagery", group = "Satelite") %>%
-    addLayersControl(
+  addLayersControl(
     baseGroups = c("Satelite", "Topo", "OSM"),
     # overlayGroups = ,
     options = layersControlOptions(collapsed = TRUE)
