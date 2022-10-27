@@ -28,34 +28,11 @@ points_sf <- st_as_sf(prados, coords = c("lon", "lat"), crs = 4326)
 
 points.df <- split(points_sf, prados$tipo)
 # 
-# names(points.df) 
 
 
 
-# quakes <- quakes %>%
-#   dplyr::mutate(mag.level = cut(mag,c(3,4,5,6),
-#                                 labels = c('>3 & <=4', '>4 & <=5', '>5 & <=6')))
-
-# quakes.df <- split(quakes, quakes$mag.level)
-# 
-# l <- leaflet() %>% addTiles()
-# 
-# names(quakes.df) %>%
-#   purrr::walk( function(df) {
-#     l <<- l %>%
-#       addMarkers(data=quakes.df[[df]],hhh
-#                  lng=~long, lat=~lat,
-#                  label=~as.character(mag),
-#                  popup=~as.character(mag),
-#                  group = df,
-#                  clusterOptions = markerClusterOptions(removeOutsideVisibleBounds = F),
-#                  labelOptions = labelOptions(noHide = F,
-#                                              direction = 'auto'))
-#   })
 
 
-
-###
 
 # mapa
 n <- leaflet() %>%
@@ -63,6 +40,9 @@ n <- leaflet() %>%
   addTiles()  %>%
   
   ## Anhadimos marcadores como nombres con cluster 
+  
+
+  
   addLabelOnlyMarkers(data = points_sf,
                       label = as.character(prados$nombre),
                       labelOptions = leaflet::labelOptions(
@@ -78,7 +58,8 @@ n <- leaflet() %>%
                         offset = c(0, -10),
                         opacity = 1),
                       # group = df,
-                      clusterOptions = markerClusterOptions(
+                      
+                        clusterOptions = markerClusterOptions(
                         showCoverageOnHover = TRUE,
                         zoomToBoundsOnClick = TRUE,
                         spiderfyOnMaxZoom = TRUE,
@@ -91,15 +72,14 @@ n <- leaflet() %>%
                         maxClusterRadius = 40))
 
 
-
 n %>% 
   addProviderTiles("OpenTopoMap", group = "Topo") %>%
   addProviderTiles("Esri.WorldImagery", group = "Satelite") %>%
   addLayersControl(
-    baseGroups = c("Satelite", "Topo", "OSM"),
-    # overlayGroups = ,
-    options = layersControlOptions(collapsed = TRUE)
+  baseGroups = c("Satelite", "Topo", "OSM"),
+  options = layersControlOptions(collapsed = TRUE)
   )
+
 
 
 
