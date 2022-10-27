@@ -15,7 +15,7 @@ library(readxl)
 ##
 
 ##Posicion marcadores
-
+ 
 # Leer datos de excel (en este caso exportado de google earth)
 my_data <- read_excel("locations.xlsx")
 prados <- data.frame(lon = my_data$x, 
@@ -38,10 +38,6 @@ points.df <- split(points_sf, prados$tipo)
 n <- leaflet() %>%
   setView(lng=-5.116429, lat=43.04103, zoom=14) %>%
   addTiles()  %>%
-  
-  ## Anhadimos marcadores como nombres con cluster 
-  
-
   
   addLabelOnlyMarkers(data = points_sf,
                       label = as.character(prados$nombre),
@@ -76,8 +72,9 @@ n %>%
   addProviderTiles("OpenTopoMap", group = "Topo") %>%
   addProviderTiles("Esri.WorldImagery", group = "Satelite") %>%
   addLayersControl(
-  baseGroups = c("Satelite", "Topo", "OSM"),
-  options = layersControlOptions(collapsed = TRUE)
+                    baseGroups = c("Satelite", "Topo", "OSM"),
+                    overlayGroups = unique(my_data$tipo),
+                    options = layersControlOptions(collapsed = FALSE)
   )
 
 
