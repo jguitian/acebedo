@@ -42,30 +42,30 @@ n <- leaflet() %>%
   addLabelOnlyMarkers(data = points_sf,
                       label = as.character(prados$nombre),
                       labelOptions = leaflet::labelOptions(
-                        style=list('color'="#000000",
+                      style=list('color'="#000000",
                                    'fontSize'="15px", 
                                    'font-family'= 'serif',
                                    'background-color' = "rgba(255,255,255,0.5)",
                                    "box-shadow" = "2px 2px rgba(0,0,0,0.2)",
                                    "border-color" = "rgba(255,255,255,0.5)"),
-                        noHide = TRUE,
-                        direction = "bottom",
-                        textOnly = TRUE,
-                        offset = c(0, -10),
-                        opacity = 1),
+                      noHide = TRUE,
+                      direction = "bottom",
+                      textOnly = TRUE,
+                      offset = c(0, -10),
+                      opacity = 1),
                       # group = df,
                       
-                        clusterOptions = markerClusterOptions(
-                        showCoverageOnHover = TRUE,
-                        zoomToBoundsOnClick = TRUE,
-                        spiderfyOnMaxZoom = TRUE,
-                        removeOutsideVisibleBounds = TRUE,
-                        spiderLegPolylineOptions = list(
-                          weight = 1.5,
-                          color = "#222",
-                          opacity = 0.1),
-                        freezeAtZoom = FALSE,
-                        maxClusterRadius = 40))
+                      clusterOptions = markerClusterOptions(
+                                       showCoverageOnHover = TRUE,
+                                       zoomToBoundsOnClick = TRUE,
+                                       spiderfyOnMaxZoom = TRUE,
+                                       removeOutsideVisibleBounds = TRUE,
+                                       spiderLegPolylineOptions = list(
+                                                                   weight = 1.5,
+                                                                 color = "#222",
+                                                                opacity = 0.1),
+                                       freezeAtZoom = FALSE,
+                                       maxClusterRadius = 40))
 
 
 n %>% 
