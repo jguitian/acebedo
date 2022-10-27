@@ -1,5 +1,5 @@
 ## NOTAS para mapa de Acebedo con toponimos#
-##test 20 10 2022
+##test 27 10 2022
 ##---------------------------------------
 # paquetes 
 library(ggmap)
